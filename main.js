@@ -1,5 +1,5 @@
 import './style.css'
-import { startBootSequence, initializeDesktop, updateClock } from './desktop.js'
+import { startBootSequence, initializeDesktop, updateClock } from './components/desktop'
 
 
 document.addEventListener('DOMContentLoaded', () => {
