@@ -7,6 +7,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+.firebaserc
+firebase.json
+
+# Firebase Functions
+functions/node_modules/
+functions/.env
+
+
+# Firebase Emulator
+.emulator/
+
+# If you're using Firebase Admin SDK with a service account key
+serviceAccountKey.json
+
 node_modules
 dist
 dist-ssr
