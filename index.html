@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Desktop with Boot Sequence and Customized Windows</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script type="module" src="main.js"></script>
+    <script type="module" src="desktop.js"></script>
+
+</head>
+<body>
+    <div id="boot-screen"></div>
+    <div class="desktop">
+        <div class="icon-container">
+            <div class="icon" data-window="About us"><img class="icon" src="./svg/About_HackerHotel.exe.svg">About Us</div>
+            <div class="icon" data-window="Events"><img class="icon"  src="./svg/Events_Workshops.exe.svg">Events</div>
+            <div class="icon" data-window="Book Stay"><img class="icon"  src="./svg/Register_Guest.exe.svg">Join us</div>
+            <div class="icon" data-window="Scholarship"><img class="icon"  src="./svg/FAQ_Help.exe.svg"> FAQ</div>
+            <div class="icon" data-window="pictures"><img class="icon"  src="./svg/Vibes_vision.exe.svg">Vibes</div>
+            <div class="icon" data-window="videos"><img class="icon"  src="./svg/Virtual_Tour.exe.svg">Tour</div>
+            <div class="icon" data-window="music"><img class="icon"  src="./svg/Contact_Support.exe.svg">Support</div>
+            <div class="icon" data-window="Sposonsors & Partners"><img class="icon" src="./svg/Sponsors_Partners.exe.svg">Partners</div>
+        </div>
+        <div class="taskbar">
+            <div class="start-button">Play</div>
+            <div class="clock" id="clock">00:00</div>
+        </div>
+    </div>
+    <script type="module" src=./components/minesweeper.js></script>
+</body>
+</html>
