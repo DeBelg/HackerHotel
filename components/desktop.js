@@ -58,19 +58,79 @@ const bootMessages = [
     "..8b8...8d8...Y88888P.Y88888P...Y88P....Y88P...YP..YP..YP.Y88888P.<br>",
     
     
-];
+]
+
+const windowContents = {
+    'About us': {
+        title: 'About HackerHotel',
+        text: "HackerHotel is a new concept of decentralising hotel rooms during blockchain conferences. We're matching and mixing you with new people alongside organizing side events fitted to the people part of our concept.",
+        buttonText: 'Learn More',
+        buttonLink: 'About HackerHotel Details',
+        backgroundImage: 'https://images.beta.cosmos.so/8dd7b3ab-3edd-4986-bcb1-4dd7be7e84cd?format=jpeg'
+    },
+    'Events': {
+        title: 'Upcoming Events',
+        text: 'Join us for exciting AI conferences and workshops throughout the year.',
+        buttonText: 'View Calendar',
+        buttonLink: 'Event Details',
+        backgroundImage: 'https://images.beta.cosmos.so/e3852a93-c716-4799-b052-335fd4ca1405.?format=jpeg'
+    },
+    'Book Stay': {
+        title: 'Join Anthropic',
+        text: 'Explore career opportunities and join our team of AI researchers and engineers.',
+        buttonText: 'View Openings',
+        buttonLink: 'Booking Details',
+        backgroundImage: 'https://images.beta.cosmos.so/3adbc54d-e2dc-42db-8e3a-069bbd0debf7.?format=jpeg'
+    },
+    'Scholarship': {
+        title: 'Anthropic Scholarship Program',
+        text: 'We offer scholarships to support promising students in AI and related fields.',
+        buttonText: 'Apply Now',
+        buttonLink: 'Scholarship Details',
+        backgroundImage: 'https://images.beta.cosmos.so/78b861fb-1dd5-436e-a66f-56978a2206c9?format=jpeg'
+    },
+    'pictures': {
+        title: 'Image Gallery',
+        text: 'Browse through our collection of AI-generated and research-related images.',
+        buttonText: 'Open Gallery',
+        buttonLink: 'Gallery Details',
+        backgroundImage: 'https://www.cosmos.so/e/291577264'
+    },
+    'videos': {
+        title: 'Video Library',
+        text: 'Watch presentations, interviews, and demonstrations from our research team.',
+        buttonText: 'Play Videos',
+        buttonLink: 'Video Details',
+        backgroundImage: 'https://www.cosmos.so/e/736953576'
+    },
+    'music': {
+        title: 'AI-Generated Music',
+        text: 'Listen to music compositions created by our AI models.',
+        buttonText: 'Play Music',
+        buttonLink: 'Music Details',
+        backgroundImage: 'https://www.cosmos.so/e/1276284316'
+    },
+    'Sposonsors & Partners': {
+        title: 'Our Sponsors and Partners',
+        text: 'Learn about the organizations collaborating with Anthropic on AI research and development.',
+        buttonText: 'View Partners',
+        buttonLink: 'Partner Details',
+        backgroundImage: 'https://www.cosmos.so/e/1276284316'
+    }
+};
+
+let zIndex = 100;
 
 function typeWriter(text, index, callback) {
-    const chunkSize = 15; // Set to 15 characters at a time
+    const chunkSize = 15;
     let end = Math.min(index + chunkSize, text.length);
     let chunk = text.substring(index, end);
 
-    // Process the chunk
     let processedChunk = '';
     for (let i = 0; i < chunk.length; i++) {
         if (chunk.substr(i, 4) === '<br>' && i + 3 < chunk.length) {
             processedChunk += '<br>';
-            i += 3; // Skip the rest of the <br> tag
+            i += 3;
         } else {
             processedChunk += chunk[i];
         }
@@ -79,12 +139,10 @@ function typeWriter(text, index, callback) {
     bootScreen.innerHTML += processedChunk;
 
     if (end < text.length) {
-        // If there's more text, process the next chunk after a short delay
         setTimeout(() => {
             requestAnimationFrame(() => typeWriter(text, end, callback));
-        }, 5); // Adjusted delay for smoother appearance with smaller chunks
+        }, 5);
     } else if (typeof callback === 'function') {
-        // If we're done, call the callback after a short delay
         setTimeout(callback, 10);
     }
 }
@@ -105,80 +163,20 @@ function adjustFontSize() {
     const viewportWidth = window.innerWidth;
     const longestLineLength = Math.max(...bootMessages.map(msg => msg.replace('<br>', '').length));
     
-    const padding = 20; // Account for padding (10px on each side)
+    const padding = 20;
     const availableWidth = viewportWidth - padding;
     const fontSize = availableWidth / longestLineLength;
     
-    bootScreen.style.fontSize = `${Math.max(fontSize, 1)}px`; // Allow scaling down to 1px if necessary
+    bootScreen.style.fontSize = `${Math.max(fontSize, 1)}px`;
     bootScreen.style.width = `${availableWidth}px`;
 }
 
-window.addEventListener('resize', adjustFontSize);
-adjustFontSize();
-const windowContents = {
-    'About us': {
-        title: 'About Anthropic',
-        text: 'Anthropic is an AI safety and research company dedicated to developing safe and ethical AI systems.',
-        buttonText: 'Learn More',
-        buttonLink: 'https://www.anthropic.com',
-        backgroundImage: 'https://images.beta.cosmos.so/8dd7b3ab-3edd-4986-bcb1-4dd7be7e84cd?format=jpeg'
-    },
-    'Events': {
-        title: 'Upcoming Events',
-        text: 'Join us for exciting AI conferences and workshops throughout the year.',
-        buttonText: 'View Calendar',
-        buttonLink: 'https://www.anthropic.com/events',
-        backgroundImage: 'https://images.beta.cosmos.so/e3852a93-c716-4799-b052-335fd4ca1405.?format=jpeg'
-    },
-    'Book Stay': {
-        title: 'Join Anthropic',
-        text: 'Explore career opportunities and join our team of AI researchers and engineers.',
-        buttonText: 'View Openings',
-        buttonLink: 'https://www.anthropic.com/careers',
-        backgroundImage: 'https://images.beta.cosmos.so/3adbc54d-e2dc-42db-8e3a-069bbd0debf7.?format=jpeg'
-    },
-    'Scholarship': {
-        title: 'Anthropic Scholarship Program',
-        text: 'We offer scholarships to support promising students in AI and related fields.',
-        buttonText: 'Apply Now',
-        buttonLink: 'https://www.anthropic.com/scholarship',
-        backgroundImage: 'https://images.beta.cosmos.so/78b861fb-1dd5-436e-a66f-56978a2206c9?format=jpeg'
-    },
-    'pictures': {
-        title: 'Image Gallery',
-        text: 'Browse through our collection of AI-generated and research-related images.',
-        buttonText: 'Open Gallery',
-        buttonLink: '#',
-        backgroundImage: 'https://www.cosmos.so/e/291577264'
-    },
-    'videos': {
-        title: 'Video Library',
-        text: 'Watch presentations, interviews, and demonstrations from our research team.',
-        buttonText: 'Play Videos',
-        buttonLink: '#',
-        backgroundImage: 'https://www.cosmos.so/e/736953576'
-    },
-    'music': {
-        title: 'AI-Generated Music',
-        text: 'Listen to music compositions created by our AI models.',
-        buttonText: 'Play Music',
-        buttonLink: '#',
-        backgroundImage: 'https://www.cosmos.so/e/1276284316'
-    },
-    'Sposonsors & Partners': {
-        title: 'Our Sponsors and Partners',
-        text: 'Learn about the organizations collaborating with Anthropic on AI research and development.',
-        buttonText: 'View Partners',
-        buttonLink: 'https://www.anthropic.com/partners',
-        backgroundImage: 'https://www.cosmos.so/e/1276284316'
-    }
-};
-
-function createWindow(windowName) {
+function createWindow(windowName, isLarge = false) {
     const content = windowContents[windowName];
     const window = document.createElement('div');
     window.className = 'window';
-    window.style.backgroundImage = `url('${content.backgroundImage}')`;
+    window.setAttribute('data-name', windowName);
+    
     window.innerHTML = `
         <div class="window-header">
             <span>${windowName}</span>
@@ -187,12 +185,36 @@ function createWindow(windowName) {
         <div class="window-content">
             <h2 class="window-title">${content.title}</h2>
             <p class="window-text">${content.text}</p>
-            <a href="${content.buttonLink}" class="window-button" target="_blank">${content.buttonText}</a>
+            <button class="window-button">${content.buttonText}</button>
         </div>
     `;
-    document.querySelector('.desktop').appendChild(window);
+    
+    const desktop = document.querySelector('.desktop');
+    desktop.appendChild(window);
+    
+    // Set initial size and position
+    window.style.width = isLarge ? '600px' : '400px';
+    window.style.top = `${50 + Math.random() * 100}px`;
+    window.style.left = `${50 + Math.random() * 100}px`;
+    
+    // Set background
+    window.style.backgroundImage = `url('${content.backgroundImage}')`;
+    
+    // Adjust window height to fit content
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            const windowContent = entry.target;
+            const windowHeight = windowContent.offsetHeight + window.querySelector('.window-header').offsetHeight;
+            window.style.height = `${windowHeight}px`;
+        }
+    });
+    
+    resizeObserver.observe(window.querySelector('.window-content'));
+    
     return window;
 }
+
+
 
 
 function makeWindowDraggable(window) {
@@ -213,9 +235,8 @@ function makeWindowDraggable(window) {
             initialY = e.clientY - yOffset;
         }
 
-        if (e.target === window || window.contains(e.target)) {
+        if (e.target === window.querySelector('.window-header') || window.querySelector('.window-header').contains(e.target)) {
             isDragging = true;
-            e.preventDefault();
         }
     }
 
@@ -238,11 +259,9 @@ function makeWindowDraggable(window) {
     }
 
     function dragEnd(e) {
-        if (isDragging) {
-            initialX = currentX;
-            initialY = currentY;
-            isDragging = false;
-        }
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
     }
 
     function setTranslate(xPos, yPos, el) {
@@ -250,18 +269,36 @@ function makeWindowDraggable(window) {
     }
 
     window.addEventListener('mousedown', dragStart, false);
-    window.addEventListener('touchstart', dragStart, { passive: false });
+    window.addEventListener('touchstart', dragStart, false);
     document.addEventListener('mousemove', drag, false);
-    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('touchmove', drag, false);
     document.addEventListener('mouseup', dragEnd, false);
     document.addEventListener('touchend', dragEnd, false);
-
-    // Add a click event listener to stop propagation
-    window.addEventListener('click', (e) => {
-        if (isDragging) {
-            e.stopPropagation();
+}
+function updateTaskbar() {
+    const taskbar = document.querySelector('.taskbar');
+    const openWindows = document.querySelectorAll('.window');
+    const startButton = taskbar.querySelector('.start-button');
+    const clock = taskbar.querySelector('.clock');
+    
+    // Clear existing taskbar buttons
+    const existingButtons = taskbar.querySelectorAll('.taskbar-button');
+    existingButtons.forEach(button => button.remove());
+    
+    // Add buttons for open windows
+    openWindows.forEach(window => {
+        if (window.style.display !== 'none') {
+            const button = document.createElement('div');
+            button.className = 'taskbar-button';
+            button.textContent = window.getAttribute('data-name');
+            button.addEventListener('click', () => {
+                window.style.display = 'block';
+                window.style.zIndex = ++zIndex;
+            });
+            // Insert the button after the start button
+            startButton.insertAdjacentElement('afterend', button);
         }
-    }, false);
+    });
 }
 
 export function initializeDesktop() {
@@ -272,14 +309,26 @@ export function initializeDesktop() {
             let window = document.querySelector(`.window[data-name="${windowName}"]`);
             if (!window) {
                 window = createWindow(windowName);
-                window.setAttribute('data-name', windowName);
                 makeWindowDraggable(window);
                 window.querySelector('.close-button').addEventListener('click', function() {
                     window.style.display = 'none';
+                    updateTaskbar();
+                });
+                window.querySelector('.window-button').addEventListener('click', function() {
+                    const largeWindow = createWindow(windowContents[windowName].buttonLink, true);
+                    makeWindowDraggable(largeWindow);
+                    largeWindow.querySelector('.close-button').addEventListener('click', function() {
+                        largeWindow.style.display = 'none';
+                        updateTaskbar();
+                    });
+                    largeWindow.style.display = 'block';
+                    largeWindow.style.zIndex = ++zIndex;
+                    updateTaskbar();
                 });
             }
             window.style.display = 'block';
             window.style.zIndex = ++zIndex;
+            updateTaskbar();
         });
     });
 }
@@ -290,3 +339,6 @@ export function updateClock() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     document.getElementById('clock').textContent = `${hours}:${minutes}`;
 }
+
+window.addEventListener('resize', adjustFontSize);
+adjustFontSize();

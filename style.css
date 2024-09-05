@@ -83,79 +83,75 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40px; /* Make sure this matches the height subtracted in .icon-container */
+  height: 40px;
   background-color: var(--hot-pink);
   display: flex;
   align-items: center;
-  border-top: 2px solid black;
-  z-index: 1000;
+  padding: 0 10px;
 }
 
 .start-button {
-  width: 80px;
-  height: 36px;
-  background-color: white;
+  background-color:var(--light-pink);
   color: var(--hot-pink);
-  margin-left: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+  padding: 5px 10px;
+  margin-right: 10px;
   cursor: pointer;
+}
+
+.taskbar-button {
+  background-color: var(--black);
+  color: var(--hot-pink);
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.taskbar-button:hover {
+  background-color: var(--light-pink);
 }
 
 .clock {
   margin-left: auto;
-  margin-right: 10px;
-  font-size: 14px;
-  color: var(--light-pink);
+  color: white;
 }
 
 .window {
-  width: 400px;
-  height: 300px;
-  background-color: var(--light-pink);
   position: absolute;
-  top: 50px;
-  left: 50px;
-  border: 2px solid --hot-pink;
-  z-index: 100;
-  display: none;
   background-size: cover;
   background-position: center;
-  color: white;
-  font-size: larger;
-  text-shadow: 
-    -2px -2px 0 var(--hot-pink),  
-    2px -2px 0 var(--hot-pink),
-    -2px 2px 0  var(--hot-pink),
-    2px 2px 0  var(--hot-pink);
+  border: 2px solid var(--hot-pink);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: none;
+  overflow: visible; /* Changed from hidden to visible */
 }
 
 .window-header {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #FCF1DA;
-  padding: 5px;
-  font-weight: bold;
+  background-color: rgba(255, 0, 144, 0.8); /* Semi-transparent hot pink */
+  color: white;
+  padding: 5px 10px;
   cursor: move;
   display: flex;
   justify-content: space-between;
-}
-
-.window-content {
-  padding: 20px;
-  height: calc(100% - 100px);
-  overflow-y: auto;
+  align-items: center;
 }
 
 .close-button {
   cursor: pointer;
 }
 
+.window-content {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  color: white;
+  overflow: visible; /* Ensure content is always visible */
+}
+
 .window-title {
-  font-size: 18px;
-  margin-bottom: 10px;
-  src: url(./public/Digitalism.ttf);
+  margin-top: 0;
 }
 
 .window-text {
@@ -163,10 +159,20 @@ body {
 }
 
 .window-button {
-  display: inline-block;
-  padding: 10px 20px;
   background-color: var(--hot-pink);
   color: white;
-  text-decoration: none;
-  border-radius: 5px;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.window-button:hover {
+  background-color: var(--teal);
+}
+
+
+
+.window-title, .window-text, .window-button {
+  position: relative;
+  z-index: 2;
 }
