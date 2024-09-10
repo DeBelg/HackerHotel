@@ -4,26 +4,18 @@
   --light-pink: #FDEDF2;
   --hot-pink: #FF0090;
   --teal: #0099B8;
-  --orange: #FFB703;
+  --taskbar-height: 5vh;
+  --taskbar-height-min: 20px;
+  --taskbar-height-max: 70px;
 }
 
-#boot-screen {
-  font-family: 'Courier New', monospace;
-  white-space: pre;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 10px;
-  background-color: #000;
-  height: 100vh;
-  box-sizing: border-box;
-}
-
-body {
+body, html {
   margin: 0;
   padding: 0;
   font-family: 'Courier New', monospace;
   background-color: var(--black);
   color: var(--hot-pink);
+  overflow: hidden;
 }
 
 #boot-screen {
@@ -38,6 +30,8 @@ body {
   padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
+  white-space: pre;
+  font-size: 14px;
 }
 
 .desktop {
@@ -52,9 +46,11 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   align-content: flex-start;
-  height: calc(100vh - 50px); /* Adjust based on taskbar height */
+  height: calc(100vh - clamp(var(--taskbar-height-min), var(--taskbar-height), var(--taskbar-height-max)));
   padding: 10px;
   box-sizing: border-box;
+  overflow: hidden;
+  z-index: 3;
 }
 
 .icon {
@@ -70,7 +66,8 @@ body {
   align-items: center;
   cursor: pointer;
   margin-bottom: 10px;
-  
+  color: var(--light-pink);
+  z-index: 3;
 }
 
 .icon i {
@@ -83,30 +80,38 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40px;
+  height: clamp(var(--taskbar-height-min), var(--taskbar-height), var(--taskbar-height-max));
   background-color: var(--hot-pink);
   display: flex;
   align-items: center;
   padding: 0 10px;
+  justify-content: flex-start;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.start-button,
+.taskbar-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .start-button {
-  background-color:var(--light-pink);
+  background-color: var(--light-pink);
   color: var(--hot-pink);
-  padding: 5px 10px;
   margin-right: 10px;
-  cursor: pointer;
+  font-weight: bold;
 }
 
 .taskbar-button {
   background-color: var(--black);
   color: var(--hot-pink);
-  padding: 5px 10px;
   margin-right: 5px;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 150px;
 }
 
@@ -117,6 +122,7 @@ body {
 .clock {
   margin-left: auto;
   color: white;
+  white-space: nowrap;
 }
 
 .window {
@@ -126,11 +132,11 @@ body {
   border: 2px solid var(--hot-pink);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: none;
-  overflow: visible; /* Changed from hidden to visible */
+  overflow: visible;
 }
 
 .window-header {
-  background-color: rgba(255, 0, 144, 0.8); /* Semi-transparent hot pink */
+  background-color: rgba(255, 0, 144, 0.8);
   color: white;
   padding: 5px 10px;
   cursor: move;
@@ -141,13 +147,15 @@ body {
 
 .close-button {
   cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
 }
 
 .window-content {
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
-  overflow: visible; /* Ensure content is always visible */
+  overflow: visible;
 }
 
 .window-title {
@@ -164,15 +172,116 @@ body {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .window-button:hover {
   background-color: var(--teal);
 }
 
-
-
 .window-title, .window-text, .window-button {
   position: relative;
   z-index: 2;
+}
+
+.desktop-logo {
+  position: absolute;
+  top: calc(50% - clamp(var(--taskbar-height-min), var(--taskbar-height), var(--taskbar-height-max)) / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.desktop-logo img {
+  width: clamp(200px, 30vw, 400px);
+  height: auto;
+  opacity: 0.5;
+}
+
+.window[data-name="Book Stay"] .window-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.window[data-name="Book Stay"] .window-title,
+.window[data-name="Book Stay"] .window-text {
+  padding: 10px;
+  margin: 0;
+}
+
+typebot-standard {
+  display: block;
+  width: 100%;
+  height: calc(100% - 100px);
+  border: none;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --taskbar-height: 5vh;
+  }
+
+  .desktop-logo img {
+    width: clamp(160px, 40vw, 300px);
+  }
+
+  #boot-screen {
+    font-size: 14px;
+    color: #FF4DB2;
+  }
+
+  .icon-container {
+    height: calc(100vh - clamp(var(--taskbar-height-min), var(--taskbar-height), var(--taskbar-height-max)));
+    overflow-y: auto;
+    padding-bottom: calc(var(--taskbar-height) + 10px);
+  }
+
+  .window[data-name="Book Stay"] {
+    width: 90vw !important;
+    height: 80vh !important;
+    left: 5vw !important;
+    top: 10vh !important;
+  }
+
+  .close-button {
+    padding: 15px;
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+    --taskbar-height: 5vh;
+  }
+
+  .desktop-logo img {
+    width: clamp(120px, 30vw, 225px);
+  }
+
+  .icon-container {
+    padding-bottom: calc(var(--taskbar-height) + 15px);
+  }
+
+  #boot-screen {
+    font-size: 12px;
+  }
+
+  .start-button,
+  .taskbar-button {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+}
+
+.window-header {
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+}
+
+@media (max-width: 768px) {
+  .window-header {
+      padding: 15px 10px;
+  }
 }
