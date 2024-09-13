@@ -66,7 +66,7 @@
             text: "HackerHotel is a new concept of decentralising hotel rooms during blockchain conferences. We're matching and mixing you with new people alongside organizing side events fitted to the people part of our concept.",
             buttonText: 'Learn More',
             buttonLink: 'https://hackerhotel.notion.site/Hacker-Hotel-Wiki-f693e7170a4c4e44be6ef77926a99409',
-            backgroundImage: 'https://images.beta.cosmos.so/8dd7b3ab-3edd-4986-bcb1-4dd7be7e84cd?format=jpeg'
+            backgroundImage: 'https://i.imgur.com/1XoLP03.png'
         },
         'Events': {
             title: 'Events',
@@ -212,6 +212,15 @@ function createWindow(windowName, isLarge = false) {
         window.style.zIndex = 1000; // Ensure highest z-index
     }
 
+
+    const windowButton = window.querySelector('.window-button');
+if (windowButton) {
+    windowButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        window.open(this.href, '_blank');
+    });
+}
+
     return window;
 }
 
@@ -230,7 +239,11 @@ function makeWindowDraggable(window) {
     let startX, startY;
 
     function dragStart(e) {
-        if (e.target.classList.contains('close-button')) {
+        // Check if the target is a button or an interactive element
+        if (e.target.tagName.toLowerCase() === 'button' ||
+            e.target.tagName.toLowerCase() === 'a' ||
+            e.target.classList.contains('close-button') ||
+            e.target.closest('typebot-standard')) {
             return;
         }
 
@@ -239,8 +252,6 @@ function makeWindowDraggable(window) {
         startX = event.clientX - window.offsetLeft;
         startY = event.clientY - window.offsetTop;
         window.style.zIndex = window.getAttribute('data-name') === 'Book Stay' ? 1000 : ++zIndex;
-
-        e.preventDefault();
 
         if (e.type === "mousedown") {
             document.addEventListener('mousemove', drag);
@@ -277,11 +288,16 @@ function makeWindowDraggable(window) {
     window.addEventListener('mousedown', dragStart);
     window.addEventListener('touchstart', dragStart, { passive: false });
 
+    // Prevent default behavior on touchmove for the entire window
+    window.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+    // Allow scrolling in the window content
     const content = window.querySelector('.window-content');
     if (content) {
-        content.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false });
+        content.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
     }
 
+    // Special handling for typebot element
     const typebotElement = window.querySelector('typebot-standard');
     if (typebotElement) {
         typebotElement.addEventListener('mousedown', (e) => e.stopPropagation());
