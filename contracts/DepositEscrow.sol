@@ -5,14 +5,17 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract DepositEscrow is Ownable {
-    uint depositAmount;                          /// @notice The amount of tokens to deposit
-    address depositTokenAddress;                 /// @notice The address of the token to deposit
-    mapping(address => bool) public deposits;    /// @notice Whether a deposit has been made
-    mapping(address => string) public nicknames; /// @notice The nickname of the depositor
+    uint public depositAmount;                        /// @notice The amount of tokens to deposit
+    address public depositTokenAddress;               /// @notice The address of the token to deposit
+    mapping(address => bool) public deposits;         /// @notice Whether a deposit has been made
+    mapping(address => bool) public depositWithdrawn; /// @notice Whether a deposit has been withdrawn
+    mapping(address => string) public nicknames;      /// @notice The nickname of the depositor
+    bool public fundsReleased;                        /// @notice Whether the funds have been released
 
     error DepositAlreadyMade();
+    error FundsNotReleased();
 
-    constructior(
+    constructor(
         uint _depositAmount,
         address _depositTokenAddress
     ) {
@@ -20,7 +23,7 @@ contract DepositEscrow is Ownable {
         depositTokenAddress = _depositTokenAddress;
     }
 
-    // Deposit function with nickname
+    /// @notice Deposit function with nickname
     function deposit(string calldata nickname) public {
         if (deposits[msg.sender]) revert DepositAlreadyMade();
 
@@ -29,7 +32,19 @@ contract DepositEscrow is Ownable {
         nicknames[msg.sender] = nickname;
     }
 
-    // Admin withdraw function to release all deposits
+    /// @notice Withdraw function for user to claim their deposit
+    function withdraw() public {
+        if (fundsReleased == false) revert FundsNotReleased();
+        if (!deposits[msg.sender]) revert DepositAlreadyMade();
+
+        IERC20(depositTokenAddress).transfer(msg.sender, depositAmount);
+        depositWithdrawn[msg.sender] = true;
+    }
+
+    /// @notice Admin withdraw function to release all deposits
+    function releaseDeposits() public onlyOwner {
+        fundsReleased = true;
+    }
 
     // Safe Smart Account with multisig on using funds.
         // Able to use Gnosis Pay Card
