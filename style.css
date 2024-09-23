@@ -202,6 +202,7 @@ body, html {
 .window[data-name="Book Stay"] .window-content {
   padding: 0;
   overflow: hidden;
+  background-color: var(--black);
 }
 
 .window[data-name="Book Stay"] .window-title,

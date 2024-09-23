@@ -76,8 +76,9 @@
             backgroundImage: 'https://images.beta.cosmos.so/c6d07b40-5513-432f-81ac-72735ad42ea6?format=jpeg'
         },
         'Book Stay': {
-            title: 'Join HackerHotel',
-            text: 'Stay at one of the decentralised rooms, villas, or apartments at the HackerHotel. Fill in the questionnaire to get started.',
+        
+            title: 'Apply to be a guest',
+            text: '',
             content: '<typebot-standard style="width: 100%; height: 500px;"></typebot-standard>',
             backgroundImage: 'https://images.beta.cosmos.so/3adbc54d-e2dc-42db-8e3a-069bbd0debf7.?format=jpeg'
         },
